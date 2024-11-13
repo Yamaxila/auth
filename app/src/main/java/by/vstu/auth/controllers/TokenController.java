@@ -64,9 +64,7 @@ public class TokenController {
     @RequestMapping(value = "/validate",
             produces = {"application/json"},
             method = RequestMethod.POST)
-    private ResponseEntity<String> validate(String token) {
-
-
+    public ResponseEntity<String> validate(String token) {
         try {
             Jwt jwt = this.jwtDecoder.decode(token);
 

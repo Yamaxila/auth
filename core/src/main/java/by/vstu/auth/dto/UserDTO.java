@@ -15,7 +15,6 @@ public class UserDTO extends BaseResponse {
     private Long externalId;
     @JsonProperty("helper_name")
     private String helperName;
-
     private String username;
     private String surname;
     private String name;

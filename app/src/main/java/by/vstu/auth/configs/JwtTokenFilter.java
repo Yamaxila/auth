@@ -1,5 +1,7 @@
-package by.vstu.auth.components;
+package by.vstu.auth.configs;
 
+import by.vstu.auth.controllers.TokenController;
+import by.vstu.auth.services.TokenService;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,11 +37,11 @@ public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
     @Autowired
     private JwtDecoder decoder;
 
+    @Autowired
+    private TokenController tokenController;
+
     @Value("${auth.resourceIds}")
     private String allowedResourceIds;
-
-    @Value("${auth.validateUrl}")
-    private String validateUrl;
 
     @Override
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
@@ -76,13 +78,8 @@ public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
         if(validatedTokens.contains(UUID.fromString(jti)))
             return true;
 
-        RestTemplate restTemplate = new RestTemplate();
-
-        HttpEntity<String> request =
-                new HttpEntity<>("", new HttpHeaders());
-
         try {
-            ResponseEntity<String> response = restTemplate.exchange(this.validateUrl + "?token=" + token, HttpMethod.POST, request, String.class);
+            ResponseEntity<String> response = this.tokenController.validate(token);
 
             if (response.getStatusCode().is2xxSuccessful()) {
                 log.debug("Adding token to token store!");
@@ -91,13 +88,11 @@ public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
             }
 
             log.debug("{}: {}", response.getStatusCode().value(), response.getBody());
-
         } catch (Exception e) {
             log.debug("Token validation failed with message {}", e.getMessage());
         }
 
         return false;
-
     }
 
     @Scheduled(cron = "0 0 */6 * * *")
@@ -105,7 +100,6 @@ public class JwtTokenFilter extends OncePerRequestFilter implements Filter {
         log.info("Clearing token store!");
         validatedTokens.clear();
     }
-
 
     private String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");

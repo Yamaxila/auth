@@ -1,8 +1,10 @@
 package by.vstu.auth.components.converters;
 
 import by.vstu.auth.models.UserModel;
+import lombok.Getter;
 import org.springframework.security.oauth2.jwt.Jwt;
 
+@Getter
 public abstract class BaseTokenConverter {
 
     protected String name;
@@ -12,9 +14,5 @@ public abstract class BaseTokenConverter {
     }
 
     public abstract Object convertToken(Jwt jwt, UserModel user);
-
-    public String getName() {
-        return this.name;
-    }
 
 }

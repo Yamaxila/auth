@@ -1,6 +1,5 @@
 package by.vstu.auth.configs;
 
-import by.vstu.auth.components.JwtTokenFilter;
 import by.vstu.auth.services.UserService;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.OctetSequenceKey;
