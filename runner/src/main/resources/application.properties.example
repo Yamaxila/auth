@@ -1,0 +1,24 @@
+spring.application.name=Auth-Service v3
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/authv3
+spring.datasource.username=postgres
+spring.datasource.password=password
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+token.signing.key=secretKey
+server.port=9989
+
+#DEBUG
+#logging.level.org.springframework.security.oauth2.jwt=DEBUG
+#logging.level.org.springframework.security.oauth2=DEBUG
+#logging.level.org.springframework.web=DEBUG
+#spring.mvc.log-request-details=true
+#logging.level.root=INFO
+
+#security
+auth.resourceIds=auth
+auth.validateUrl=http://127.0.0.1:9989/validate
+
+#DeanInfoSupport
+dean.api.url=http://127.0.0.1:8080/api/v1/
+dean.token=deanSupportJwtToken
