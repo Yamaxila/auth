@@ -1,7 +1,6 @@
 package by.vstu.auth.configs;
 
 import by.vstu.auth.controllers.TokenController;
-import by.vstu.auth.services.TokenService;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,15 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
